@@ -6,7 +6,7 @@ class UploadFileForm(forms.Form):
 
 
 class StudentForm(forms.Form):  
-    firstname = forms.CharField(label="Enter first name",max_length=50)  
-    lastname  = forms.CharField(label="Enter last name", max_length = 10)  
-    email     = forms.EmailField(label="Enter Email")  
+    firstname = forms.CharField(label="Введите ключ шифрования(цифры)",max_length=50)  
+    lastname  = forms.CharField(label="Введите сообщение которое будет зашифрованно", max_length = 500)
+
     file      = forms.FileField() # for creating file input  

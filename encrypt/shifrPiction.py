@@ -89,8 +89,8 @@ def shifr(imagePut, key, text):
            else:
                b[7] = 0
            draw.point((x, y), (getByte(r), getByte(g), getByte(b))) #рисуем пиксель
-    image.save(imagePut+"Encrypt.bmp", "BMP")  # не забываем сохранить изображение
-    return imagePut+"Encrypt.bmp"
+    image.save(imagePut+"res.bmp", "BMP")  # не забываем сохранить изображение
+    return imagePut+"res.bmp"
 
 def deshifr(imagePut, key):
     image = Image.open(imagePut)
@@ -117,7 +117,6 @@ def deshifr(imagePut, key):
         return "error"
 
 
-def handle_uploaded_file(f):  
-    with open('encrypt/static/upload/'+f.name, 'wb+') as destination:  
-        for chunk in f.chunks():  
-            destination.write(chunk)
+# image = Image.open('anime.png')
+# imagePut = shifr('anime.png',16,"Тру хацкер!!!")
+# print(deshifr(imagePut,16))
