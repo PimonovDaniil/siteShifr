@@ -12,12 +12,9 @@ def index(request):
     if request.method == 'POST':  
         student = StudentForm(request.POST, request.FILES)  
         if student.is_valid():  
-            try:
-                handle_uploaded_file(request.FILES['file'])  
-                 
-                return render(request,'decrypt/homePage.html',{'form':student,'lol':deshifr('decrypt/static/upload/'+request.FILES['file'].name,int(request.POST['firstname']))})
-            except:
-                return HttpResponse("Что-то вы ввели не так. Либо это мой косяк.")
+            handle_uploaded_file(request.FILES['file'])  
+            #return HttpResponse(deshifr('decrypt/static/upload/'+request.FILES['file'].name,int(request.POST['firstname'])))  
+            return render(request,'decrypt/homePage.html',{'form':student,'lol':deshifr('decrypt/static/upload/'+request.FILES['file'].name,int(request.POST['firstname']))})
     else:  
         student = StudentForm()  
         return render(request,'decrypt/homePage.html',{'form':student})  
