@@ -11,7 +11,7 @@
     <body class="jumbotron">
             <div class="container">
               <h1>Дешифрование</h1>
-              {% block content %}
+              {% block content %}     
               {% endblock %}
               <p>
                 <a href="/" class="btn btn-success btn-lg">Главная страница</a>
@@ -22,7 +22,8 @@
         <form method="POST" class="post-form " enctype="multipart/form-data">  
           {% csrf_token %}  
           {{ form.as_p }}  
-          <button type="submit" class="save btn btn-success">Save</button>  
+          <button type="submit" class="save btn btn-success">Save</button> 
       </form> 
+      <p>Расшифрованное сообщение: {{lol}}</p> 
     </body>
 </html>
