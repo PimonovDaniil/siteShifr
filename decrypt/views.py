@@ -20,5 +20,6 @@ def index(request):
         return render(request,'decrypt/homePage.html',{'form':student})  
 
 
+
 # def index(request):
     # return render(request,'mainApp/homePage.html')
