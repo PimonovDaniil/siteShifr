@@ -25,7 +25,7 @@ def index(request):
                     file_type = 'application/octet-stream';
                 response['Content-Type'] = file_type
                 response['Content-Length'] = str(os.stat(excel_file_name).st_size);
-                response['Content-Disposition'] = "attachment; filename=Encrypted_"+request.FILES['file'].name;
+                response['Content-Disposition'] = "attachment; filename=Encrypted_"+request.FILES['file'].name+".png";
             
                 return response;
             except:
