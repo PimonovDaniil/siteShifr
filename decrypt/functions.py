@@ -51,7 +51,11 @@ def shifr(imagePut, key, text):
     height = image.size[1]  # Определяем высоту
     pix = image.load()  # Выгружаем значения пикселей
     bitText = getBitList(text,key)
+    for i in range(8):
+        bitText.append(0)
     for x in range(width):
+        if len(bitText) <= 0:
+            break
         for y in range(height):
            r = getBit(pix[x, y][0]) #узнаём значение красного цвета пикселя
            g = getBit(pix[x, y][1]) #зелёного
@@ -89,8 +93,8 @@ def shifr(imagePut, key, text):
            else:
                b[7] = 0
            draw.point((x, y), (getByte(r), getByte(g), getByte(b))) #рисуем пиксель
-    image.save(imagePut+"Encrypt.bmp", "BMP")  # не забываем сохранить изображение
-    return imagePut+"Encrypt.bmp"
+    image.save(imagePut+"res.png", "PNG")  # не забываем сохранить изображение
+    return imagePut+"res.png"
 
 def deshifr(imagePut, key):
     image = Image.open(imagePut)
@@ -99,7 +103,10 @@ def deshifr(imagePut, key):
     height = image.size[1]  # Определяем высоту
     pix = image.load()  # Выгружаем значения пикселей
     bitText = []
+    triger=[1,1,1,1,1,1,1,1]
     for x in range(width):
+        if triger[0] == 0 and triger[1] == 0 and triger[2] == 0 and triger[3] == 0 and triger[4] == 0 and triger[5] == 0 and triger[6] == 0 and triger[7] == 0:
+            break
         for y in range(height):
            r = getBit(pix[x, y][0]) #узнаём значение красного цвета пикселя
            g = getBit(pix[x, y][1]) #зелёного
@@ -110,11 +117,25 @@ def deshifr(imagePut, key):
            bitText.append(g[7])
            bitText.append(b[6])
            bitText.append(b[7])
+           del triger[0]
+           triger.append(r[6])
+           del triger[0]
+           triger.append(r[7])
+           del triger[0]
+           triger.append(g[6])
+           del triger[0]
+           triger.append(g[7])
+           del triger[0]
+           triger.append(b[6])
+           del triger[0]
+           triger.append(b[7])
+    for i in range(8):
+        bitText.pop()
     try:
         st=getStrFromBit(bitText, key)
         return st
     except:
-        return "error"
+        return "error"      
 
 
 def handle_uploaded_file(f):  
