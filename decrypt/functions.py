@@ -1,8 +1,10 @@
 from PIL import Image, ImageDraw
+import os
 import random
 
 def getBit(n):
-    b=[]
+    assert n <= 255
+    b = []
     while n > 0:
         b.append(n % 2)
         n = n // 2
@@ -14,17 +16,21 @@ def getBit(n):
 def getByte(b):
     res = 0
     for i in b:
-        res=res << 1
-        res+=i
+        res = res << 1
+        res += i
     return res
 
-def getBitList(text,key):
+def getBitList(text, key):
+    print("alo")
     text = bytes(text, encoding="utf_8")
+    print("alo2")
     text = list(text)
     random.seed(key)
+
     for i in range(len(text)):
-        text[i]=(text[i]+int(random.random())*255) % 255
-    res=[]
+        text[i] = (text[i]+random.randint(5, 255)) % 254+1
+    print(text)
+    res = []
     for i in text:
         res += getBit(i)
     return res
@@ -39,8 +45,10 @@ def getStrFromBit(b,key):
         if s1!=0:
             res.append(s1)
     random.seed(key)
+    print(res)
     for i in range(len(res)):
-        res[i]=(res[i]-int(random.random())*255) % 255
+        res[i]=(res[i]-random.randint(5, 255)) % 254-1
+
     res=bytes(res).decode('utf-8')
     return res
 
@@ -50,8 +58,9 @@ def shifr(imagePut, key, text):
     width = image.size[0]  # Определяем ширину
     height = image.size[1]  # Определяем высоту
     pix = image.load()  # Выгружаем значения пикселей
-    bitText = getBitList(text,key)
-    for i in range(8):
+    bitText = getBitList(text, key)
+    print(bitText)
+    for i in range(32):
         bitText.append(0)
     for x in range(width):
         if len(bitText) <= 0:
@@ -60,7 +69,7 @@ def shifr(imagePut, key, text):
            r = getBit(pix[x, y][0]) #узнаём значение красного цвета пикселя
            g = getBit(pix[x, y][1]) #зелёного
            b = getBit(pix[x, y][2]) #синего
-           if(len(bitText) > 0):
+           if (len(bitText) > 0):
                r[6]=bitText[0]
                del bitText[0]
            else:
@@ -103,11 +112,22 @@ def deshifr(imagePut, key):
     height = image.size[1]  # Определяем высоту
     pix = image.load()  # Выгружаем значения пикселей
     bitText = []
-    triger=[1,1,1,1,1,1,1,1]
+    triger=[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+    flagGl=False
     for x in range(width):
-        if triger[0] == 0 and triger[1] == 0 and triger[2] == 0 and triger[3] == 0 and triger[4] == 0 and triger[5] == 0 and triger[6] == 0 and triger[7] == 0:
+        if flagGl:
             break
         for y in range(height):
+           flag = True
+           for i in range(32):
+                if triger[i] == 1:
+                    flag = False
+                    break
+           if flag:
+                print("kek")
+                flagGl=True
+                break
+
            r = getBit(pix[x, y][0]) #узнаём значение красного цвета пикселя
            g = getBit(pix[x, y][1]) #зелёного
            b = getBit(pix[x, y][2]) #синего
@@ -129,13 +149,13 @@ def deshifr(imagePut, key):
            triger.append(b[6])
            del triger[0]
            triger.append(b[7])
-    for i in range(8):
+    #print(triger)
+    for i in range(32):
         bitText.pop()
-    try:
-        st=getStrFromBit(bitText, key)
-        return st
-    except:
-        return "error"      
+    print(bitText)
+
+    st=getStrFromBit(bitText, key)
+    return st    
 
 
 def handle_uploaded_file(f):  
