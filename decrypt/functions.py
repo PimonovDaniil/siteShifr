@@ -23,7 +23,7 @@ def getBitList(text,key):
     text = list(text)
     random.seed(key)
     for i in range(len(text)):
-        text[i]=(text[i]+int(random.random()*255)) % 255
+        text[i]=(text[i]+int(random.random())*255) % 255
     res=[]
     for i in text:
         res += getBit(i)
@@ -40,7 +40,7 @@ def getStrFromBit(b,key):
             res.append(s1)
     random.seed(key)
     for i in range(len(res)):
-        res[i]=(res[i]-int(random.random()*255)) % 255
+        res[i]=(res[i]-int(random.random())*255) % 255
     res=bytes(res).decode('utf-8')
     return res
 
