@@ -20,5 +20,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('mainApp.urls')),
     path('encrypt/', include('encrypt.urls')),
+    path('regis/', include('regis.urls')),
     path('decrypt/', include('decrypt.urls')),
 ]
