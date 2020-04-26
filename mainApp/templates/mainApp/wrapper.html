@@ -11,13 +11,18 @@
     <body>
         <div class="jumbotron">
             <div class="container">
+              <p class="text-right"></pclass>{{lol}}</p>
               <h1>Сайт позволяющий зашифровать текст в картинке</h1>
               {% block content %}
               {% endblock %}
               <p>
-                <a href="encrypt/" class="btn btn-primary btn-lg">Зашифровать &raquo;</a>
-                <a href="decrypt/" class="btn btn-warning btn-lg">Расшифровать &raquo;</a>
-                <a href="regis/" class="btn btn-primary btn-lg">Регистрация &raquo;</a>
+                <a href="/encrypt" class="btn btn-primary btn-lg">Зашифровать &raquo;</a>
+                <a href="/decrypt" class="btn btn-warning btn-lg">Расшифровать &raquo;</a>
+                {% if lol == "" %}
+                  <a href="/regis" class="btn btn-primary btn-lg">Регистрация &raquo;</a>
+                {% else %}
+                  <a href="/exit" class="btn btn-warning btn-lg">Выйти &raquo;</a>
+                {% endif %}
               </p>
             </div>
         </div>

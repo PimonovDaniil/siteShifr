@@ -39,4 +39,4 @@ def index(request):
                 return HttpResponse("Что-то вы ввели не так. Либо это мой косяк.")
     else:  
         student = StudentForm()  
-        return render(request,'encrypt/homePage.html',{'form':student})  
+        return render(request,'encrypt/homePage.html',{'form':student,"user":request.session['user']})  

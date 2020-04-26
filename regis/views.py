@@ -15,15 +15,14 @@ def index(request):
         student = StudentForm(request.POST, request.FILES)  
         if student.is_valid():  
             if addUser("regis/static/sql.txt",request.POST['firstname'],request.POST['lastname']):
-                
-                return render(request,'regis/homePage.html',{'form':student,"lol":"Вы успешно зарегистрировались!!!"})
+                request.session['user'] = request.POST['firstname']
+                return render(request,'regis/homePage.html',{'form':student,"lol":"Вы успешно зарегистрировались!!!","user":request.session['user']})
             else:
-                return render(request,'regis/homePage.html',{'form':student,"lol":"имя пользователя занято"})
+                return render(request,'regis/homePage.html',{'form':student,"lol":"имя пользователя занято","user":request.session['user']})
     else:  
         student = StudentForm()  
-        return render(request,'regis/homePage.html',{'form':student})  
+        return render(request,'regis/homePage.html',{'form':student,"user":request.session['user']})  
 
 
 
-# def index(request):
-    # return render(request,'mainApp/homePage.html')
+ 

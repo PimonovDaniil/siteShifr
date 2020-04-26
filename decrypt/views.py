@@ -14,10 +14,10 @@ def index(request):
         if student.is_valid():  
             handle_uploaded_file(request.FILES['file'])  
             #return HttpResponse(deshifr('decrypt/static/upload/'+request.FILES['file'].name,int(request.POST['firstname'])))  
-            return render(request,'decrypt/homePage.html',{'form':student,'lol':deshifr('decrypt/static/upload/'+request.FILES['file'].name,int(request.POST['firstname']))})
+            return render(request,'decrypt/homePage.html',{'form':student,"user":request.session['user'],'lol':deshifr('decrypt/static/upload/'+request.FILES['file'].name,int(request.POST['firstname']))})
     else:  
         student = StudentForm()  
-        return render(request,'decrypt/homePage.html',{'form':student})  
+        return render(request,'decrypt/homePage.html',{'form':student,"user":request.session['user']})  
 
 
 
