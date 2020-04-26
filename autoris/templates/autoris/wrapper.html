@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Авторизация</title>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" type="text/css">
+    </head>
+    <body class="jumbotron">
+            <div class="container">
+              <p class="text-right"></pclass>{{user}}</p>
+              <h1>Авторизация</h1>
+              {% block content %}     
+              {% endblock %}
+              <p>
+                <a href="/" class="btn btn-success btn-lg">Главная страница</a>
+              </p>
+            </div>
+
+        <form method="POST" class="post-form " enctype="multipart/form-data">  
+          {% csrf_token %}  
+          {{ form.as_p }}  
+          <button type="submit" class="save btn btn-success">Save</button> 
+      </form> 
+      <p>Статус: {{lol}}</p> 
+    </body>
+</html>

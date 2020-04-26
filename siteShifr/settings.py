@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'regis',
+    'autoris',
     'decrypt',
     'encrypt',
     'mainApp',
