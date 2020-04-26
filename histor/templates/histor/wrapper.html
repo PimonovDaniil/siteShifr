@@ -28,11 +28,13 @@
           </tr>
         </thead>
         <tbody>
+          {% for k,v in log.items %}
           <tr>
             <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
+            <td>{{k}}</td>
+            <td>{{v}}</td>
           </tr>
+          {% endfor %}
         </tbody>
       </table>
     </body>

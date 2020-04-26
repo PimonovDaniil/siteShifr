@@ -10,11 +10,14 @@ from .functions import handle_uploaded_file
 from .forms import StudentForm  
 def index(request):  
     if request.method == 'POST':  
-        student = StudentForm(request.POST, request.FILES)  
-        if student.is_valid():  
-            handle_uploaded_file(request.FILES['file'])  
-            #return HttpResponse(deshifr('decrypt/static/upload/'+request.FILES['file'].name,int(request.POST['firstname'])))  
-            return render(request,'decrypt/homePage.html',{'form':student,"user":request.session['user'],'lol':deshifr('decrypt/static/upload/'+request.FILES['file'].name,int(request.POST['firstname']))})
+        try:
+            student = StudentForm(request.POST, request.FILES)  
+            if student.is_valid():  
+                handle_uploaded_file(request.FILES['file'])  
+                #return HttpResponse(deshifr('decrypt/static/upload/'+request.FILES['file'].name,int(request.POST['firstname'])))  
+                return render(request,'decrypt/homePage.html',{'form':student,"user":request.session['user'],'lol':deshifr('decrypt/static/upload/'+request.FILES['file'].name,int(request.POST['firstname']))})
+        except:
+                return HttpResponse("Что-то вы ввели не так. Либо это мой косяк.")
     else:  
         student = StudentForm()  
         return render(request,'decrypt/homePage.html',{'form':student,"user":request.session['user']})  
