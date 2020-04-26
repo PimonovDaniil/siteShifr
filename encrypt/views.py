@@ -4,6 +4,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from .forms import UploadFileForm
 import mimetypes
+import json
 import os
 
 from .functions import handle_uploaded_file  
@@ -33,7 +34,12 @@ def index(request):
                 response['Content-Type'] = file_type
                 response['Content-Length'] = str(os.stat(excel_file_name).st_size);
                 response['Content-Disposition'] = "attachment; filename=Encrypted_"+num+".png";
-            
+                if request.session['user'] != "":
+                    with open("regis/static/sql.txt", "r") as read_file:
+                        data = json.load(read_file)
+                    data['users'][request.session['user']][0][request.FILES['file'].name]=request.POST['firstname']
+                    with open("regis/static/sql.txt", "w") as write_file:
+                        json.dump(data, write_file,indent=4)
                 return response;
             except:
                 return HttpResponse("Что-то вы ввели не так. Либо это мой косяк.")
