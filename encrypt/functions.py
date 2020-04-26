@@ -29,7 +29,6 @@ def getBitList(text, key):
 
     for i in range(len(text)):
         text[i] = (text[i]+random.randint(5, 255)) % 254+1
-    print(text)
     res = []
     for i in text:
         res += getBit(i)
@@ -45,7 +44,6 @@ def getStrFromBit(b,key):
         if s1!=0:
             res.append(s1)
     random.seed(key)
-    print(res)
     for i in range(len(res)):
         res[i]=(res[i]-random.randint(5, 255)) % 254-1
 
@@ -59,7 +57,6 @@ def shifr(imagePut, key, text):
     height = image.size[1]  # Определяем высоту
     pix = image.load()  # Выгружаем значения пикселей
     bitText = getBitList(text, key)
-    print(bitText)
     for i in range(32):
         bitText.append(0)
     for x in range(width):
@@ -152,7 +149,6 @@ def deshifr(imagePut, key):
     #print(triger)
     for i in range(32):
         bitText.pop()
-    print(bitText)
 
     st=getStrFromBit(bitText, key)
     return st

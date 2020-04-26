@@ -14,6 +14,9 @@ def index(request):
             student = StudentForm(request.POST, request.FILES)  
             if student.is_valid():  
                 handle_uploaded_file(request.FILES['file'])  
+                print("Дешифр.  handle_uploaded_file(request.FILES['file']) ")
+                print("имя файла "+request.FILES['file'].name)
+                print("ключ "+request.POST['firstname'])
                 #return HttpResponse(deshifr('decrypt/static/upload/'+request.FILES['file'].name,int(request.POST['firstname'])))  
                 return render(request,'decrypt/homePage.html',{'form':student,"user":request.session.get('user', ""),'lol':deshifr('decrypt/static/upload/'+request.FILES['file'].name,int(request.POST['firstname']))})
         except:
