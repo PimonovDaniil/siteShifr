@@ -34,7 +34,7 @@ def index(request):
                 response['Content-Type'] = file_type
                 response['Content-Length'] = str(os.stat(excel_file_name).st_size);
                 response['Content-Disposition'] = "attachment; filename=Encrypted_"+num+".png";
-                if request.session['user'] != "":
+                if request.session.get('user', "") != "":
                     with open("regis/static/sql.txt", "r") as read_file:
                         data = json.load(read_file)
                     data['users'][request.session['user']][0][request.FILES['file'].name]=request.POST['firstname']
@@ -45,4 +45,4 @@ def index(request):
                 return HttpResponse("Что-то вы ввели не так. Либо это мой косяк.")
     else:  
         student = StudentForm()  
-        return render(request,'encrypt/homePage.html',{'form':student,"user":request.session['user']})  
+        return render(request,'encrypt/homePage.html',{'form':student,"user":request.session.get('user', "")})  

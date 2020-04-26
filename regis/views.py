@@ -16,12 +16,12 @@ def index(request):
         if student.is_valid():  
             if addUser("regis/static/sql.txt",request.POST['firstname'],request.POST['lastname']):
                 request.session['user'] = request.POST['firstname']
-                return render(request,'regis/homePage.html',{'form':student,"lol":"Вы успешно зарегистрировались!!!","user":request.session['user']})
+                return render(request,'regis/homePage.html',{'form':student,"lol":"Вы успешно зарегистрировались!!!","user":request.session.get('user', "")})
             else:
-                return render(request,'regis/homePage.html',{'form':student,"lol":"имя пользователя занято","user":request.session['user']})
+                return render(request,'regis/homePage.html',{'form':student,"lol":"имя пользователя занято","user":request.session.get('user', "")})
     else:  
         student = StudentForm()  
-        return render(request,'regis/homePage.html',{'form':student,"user":request.session['user']})  
+        return render(request,'regis/homePage.html',{'form':student,"user":request.session.get('user', "")})  
 
 
 

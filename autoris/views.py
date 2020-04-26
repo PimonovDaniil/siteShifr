@@ -16,12 +16,12 @@ def index(request):
         if student.is_valid():  
             if checkUser("regis/static/sql.txt",request.POST['firstname'],request.POST['lastname']):
                 request.session['user'] = request.POST['firstname']
-                return render(request,'autoris/homePage.html',{'form':student,"lol":"Вы успешно авторизировались!!!","user":request.session['user']})
+                return render(request,'autoris/homePage.html',{'form':student,"lol":"Вы успешно авторизировались!!!","user":request.session.get('user', "")})
             else:
-                return render(request,'autoris/homePage.html',{'form':student,"lol":"Неверное имя пользователя или пароль","user":request.session['user']})
+                return render(request,'autoris/homePage.html',{'form':student,"lol":"Неверное имя пользователя или пароль","user":request.session.get('user', "")})
     else:  
         student = StudentForm()  
-        return render(request,'autoris/homePage.html',{'form':student,"user":request.session['user']})  
+        return render(request,'autoris/homePage.html',{'form':student,"user":request.session.get('user', "")})  
 
 
 
