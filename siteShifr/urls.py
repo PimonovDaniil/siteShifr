@@ -23,4 +23,5 @@ urlpatterns = [
     path('regis/', include('regis.urls')),
     path('autoris/', include('autoris.urls')),
     path('decrypt/', include('decrypt.urls')),
+    path('histor/', include('histor.urls')),
 ]
