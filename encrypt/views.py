@@ -3,6 +3,7 @@ from django import forms
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from .forms import UploadFileForm
+import sqlite3
 import mimetypes
 import json
 import os
@@ -35,11 +36,27 @@ def index(request):
                 response['Content-Length'] = str(os.stat(excel_file_name).st_size);
                 response['Content-Disposition'] = "attachment; filename=Encrypted_"+num+".png";
                 if request.session.get('user', "") != "":
-                    with open("regis/static/sql.txt", "r") as read_file:
-                        data = json.load(read_file)
+                    conn = sqlite3.connect("regis/static/sql.txt")  # или :memory: чтобы сохранить в RAM
+                    cursor = conn.cursor()
+                    sql = "SELECT * FROM albums WHERE title=?"
+                    cursor.execute(sql, [("Red")])
+                    for row in cursor.execute("SELECT rowid, * FROM albums ORDER BY title"):
+                        data=json.loads(row[1])
+                    # with open("regis/static/sql.txt", "r") as read_file:
+                    #     data = json.load(read_file)
                     data['users'][request.session['user']][0][request.FILES['file'].name]=request.POST['firstname']
-                    with open("regis/static/sql.txt", "w") as write_file:
-                        json.dump(data, write_file,indent=4)
+                    sql = """
+                    UPDATE albums 
+                    SET title = '
+                    """
+                    sql+=json.dumps(data)
+                    sql+='\''
+                    cursor.execute(sql)
+
+                    # Сохраняем изменения
+                    conn.commit()
+                    # with open("regis/static/sql.txt", "w") as write_file:
+                    #     json.dump(data, write_file,indent=4)
                 return response;
             except:
                 return HttpResponse("Что-то вы ввели не так. Либо это мой косяк.")
